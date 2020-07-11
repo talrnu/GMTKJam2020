@@ -27,11 +27,21 @@ public class GameManager : MonoBehaviour
         {
             ReloadScene();
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            ToMainMenu();
+        }
     }
 
     private void ReloadScene()
     {
-        SceneManager.LoadSceneAsync(0); // this hard coded value needs to change
+        SceneManager.LoadSceneAsync(1); // this hard coded value needs to change
+    }
+
+    private void ToMainMenu()
+    {
+        SceneManager.LoadSceneAsync(0);
     }
 
     private IEnumerator RestartGame()

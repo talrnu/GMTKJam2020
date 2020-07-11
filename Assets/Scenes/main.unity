@@ -8592,7 +8592,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: New Text
+  m_Text: MeterPoints
 --- !u!222 &321685326
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -12866,6 +12866,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 477895708}
   _rotateSpeed: 120
+  _maxTiltAngle: 15
+  _resetSpeed: 30
 --- !u!1001 &484605274
 PrefabInstance:
   m_ObjectHideFlags: 0
