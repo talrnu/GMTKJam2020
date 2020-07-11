@@ -3,13 +3,11 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
-	[SerializeField] private GameManager _gameManager;
-
 	public int Points = 0;
 	public bool OneSecondToSelfDestruct = false;
 	private int selfDestructSeconds = 5;
 	private int stationarySeconds = 0;
-	private float _epsilon = 0.1f;
+	private float _epsilon = 0.001f;
 	private Vector3 _currentPosition;
 	private Vector3 _previousPosition;
 	bool _timerStarted = false;
@@ -46,7 +44,6 @@ public class Ball : MonoBehaviour
 		if (stationarySeconds >= selfDestructSeconds)
 		{
 			UnityEngine.Object.Destroy(this.gameObject);
-			_gameManager.GameOver();
 		}
 	}
 	
