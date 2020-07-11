@@ -5,7 +5,19 @@ using UnityEngine;
 public class MarbleManager : MonoBehaviour
 {
 	[SerializeField] private GameManager _gameManager;
-	[SerializeField] public List<GameObject> ActiveMarbles; 
+	private List<GameObject> _activeMarbles;
+
+	private void Start()
+	{
+		_activeMarbles = new List<GameObject>();
+
+		GameObject[] list = GameObject.FindGameObjectsWithTag("Ball");
+
+		foreach (var marble in list)
+		{
+			_activeMarbles.Add(marble);
+		}
+	}
 
 	private void Update()
 	{
@@ -13,7 +25,7 @@ public class MarbleManager : MonoBehaviour
 		CleanUpList();
 
 		// If the marble count has hit zero and the timer hasn't been set yet: Start the timer.
-		if (ActiveMarbles.Count == 0 && !_gameManager.IsGameOver())
+		if (_activeMarbles.Count == 0 && !_gameManager.IsGameOver())
 		{
 			Debug.Log("No more marbles remain! Starting game over timer...");
 			_gameManager.GameOver();
@@ -22,10 +34,10 @@ public class MarbleManager : MonoBehaviour
 
 	private void CleanUpList()
 	{
-		for (var i = ActiveMarbles.Count - 1; i > -1; i--)
+		for (var i = _activeMarbles.Count - 1; i > -1; i--)
 		{
-			if (ActiveMarbles[i] == null)
-				ActiveMarbles.RemoveAt(i);
+			if (_activeMarbles[i] == null)
+				_activeMarbles.RemoveAt(i);
 		}
 	}
 }
