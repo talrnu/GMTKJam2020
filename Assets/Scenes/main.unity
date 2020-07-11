@@ -12788,6 +12788,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 477895708}
   _rotateSpeed: 120
+  _maxTiltAngle: 15
+  _resetSpeed: 30
 --- !u!1001 &484605274
 PrefabInstance:
   m_ObjectHideFlags: 0
