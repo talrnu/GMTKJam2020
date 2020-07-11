@@ -53,4 +53,9 @@ public class GameManager : MonoBehaviour
             ReloadScene();
         }
     }
+
+    public bool IsGameOver()
+    {
+        return _isGameOver;
+    }
 }
