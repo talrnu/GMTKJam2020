@@ -11,7 +11,7 @@ public class MazeController : MonoBehaviour
     private bool _rotatingLeft = false;
     private bool _rotatingRight = false;
 
-    private const float _rotateSpeed = 80f;
+    [SerializeField] private float _rotateSpeed = 80f;
 
     void Update()
     {
