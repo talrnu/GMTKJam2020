@@ -8348,7 +8348,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90203a071deb2224294b89aa1a77aeb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameManager: {fileID: 0}
+  _gameManager: {fileID: 1009517436}
   Points: 0
   OneSecondToSelfDestruct: 0
 --- !u!1001 &315746762
@@ -22601,7 +22601,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90203a071deb2224294b89aa1a77aeb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameManager: {fileID: 0}
+  _gameManager: {fileID: 1009517436}
   Points: 0
   OneSecondToSelfDestruct: 0
 --- !u!1 &855453057
