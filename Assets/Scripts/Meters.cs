@@ -4,30 +4,31 @@ using UnityEngine.UI;
 
 public class Meters : MonoBehaviour
 {
-	private int points = 0;
-	bool timerStarted = false;
-	private Text meterPoints;
+	private Text _meterPoints;
+	private string _warningColor = "red";
+	private Color _normalColor = Color.green;
 	
 	void Start()
 	{
-		meterPoints = GameObject.Find("MeterPoints").GetComponent<Text>();
-		meterPoints.text = "Roll out";
-		
-		if (!timerStarted)
-		{
-			timerStarted = true;
-			Invoke ( "_tick", 1f );
-		}
+		_meterPoints = GameObject.Find("MeterPoints").GetComponent<Text>();
+		_meterPoints.color = _normalColor;
+		_meterPoints.text = "Roll out";
 	}
 
 	void OnGUI ()
 	{
-		meterPoints.text = "Points: " + points;
-	}
-	
-	private void _tick()
-	{
-		points++;
-		Invoke ( "_tick", 1f );
+		var balls = GameObject.FindGameObjectsWithTag("Ball");
+		
+		_meterPoints.text = "";
+		int i = 0;
+		foreach (var ball in balls)
+		{
+			var ballComponent = ball.GetComponent<Ball>();
+			var warning = ballComponent.OneSecondToSelfDestruct;
+			_meterPoints.text += warning ? "<color=" + _warningColor + ">" : "";
+			_meterPoints.text += "Points[" + i + "]:" + ballComponent.Points;
+			_meterPoints.text += warning ? "</color>" : "";
+			i++;
+		}
 	}
 }
