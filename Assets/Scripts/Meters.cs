@@ -5,8 +5,9 @@ using UnityEngine.UI;
 public class Meters : MonoBehaviour
 {
 	private Text _meterPoints;
+	private string _statonaryColor = "orange";
 	private string _warningColor = "red";
-	private Color _normalColor = Color.green;
+	private Color _normalColor = Color.blue;
 	
 	void Start()
 	{
@@ -24,10 +25,11 @@ public class Meters : MonoBehaviour
 		foreach (var ball in balls)
 		{
 			var ballComponent = ball.GetComponent<Ball>();
-			var warning = ballComponent.OneSecondToSelfDestruct;
-			_meterPoints.text += warning ? "<color=" + _warningColor + ">" : "";
+			var statonary = ballComponent.TimeToSelfDestruct <= ballComponent.SelfDestructSeconds - 1;
+			var warning = ballComponent.TimeToSelfDestruct <= 1;
+			_meterPoints.text += warning ? "<color=" + _warningColor + ">" : statonary ? "<color=" + _statonaryColor + ">" : "";
 			_meterPoints.text += "Points[" + i + "]:" + ballComponent.Points;
-			_meterPoints.text += warning ? "</color>" : "";
+		_meterPoints.text += (warning || statonary) ? "</color>" : "";
 			i++;
 		}
 	}

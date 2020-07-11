@@ -38,6 +38,9 @@ public class MarbleManager : MonoBehaviour
 		{
 			if (_activeMarbles[i] == null)
 				_activeMarbles.RemoveAt(i);
+			else if (_activeMarbles[i]?.GetComponent<Ball>()?.DestroyThisBall ?? false)
+				Object.Destroy(_activeMarbles[i]);
+			
 		}
 	}
 }
