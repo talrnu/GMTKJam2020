@@ -112,10 +112,8 @@ public class InputVoteCollector : MonoBehaviour
     {
         while (true)
         {
-			Debug.Log(".");
             if (TalliesHaveChanged)
             {
-			Debug.Log("TalliesHaveChanged");
                 TalliesHaveChanged = false;
                 //var inputDirection = CalculateVotedInput_Discrete();
                 var inputDirection = CalculateVotedInput_VectorSum();
