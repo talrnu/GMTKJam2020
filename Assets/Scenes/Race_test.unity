@@ -617,9 +617,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   InputVoteCollector: {fileID: 1009517438}
-  JerkCount: 50
+  JerkCount: 3
   JerkWeight: 1
-  JerkInterval: 0.25
+  JerkInterval: 0.5
 --- !u!1 &1064719599
 GameObject:
   m_ObjectHideFlags: 0
