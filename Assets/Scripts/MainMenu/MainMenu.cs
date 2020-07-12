@@ -6,6 +6,38 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
+	private GameObject _customPanel;
+	private Dropdown _dropdown;
+
+	// 0 - Game ends all balls removed
+	// 1 - Game ends on specified ball
+	// 2 - Game ends on one ball remaining
+	private int _gameEndValue;
+
+	void Start()
+	{
+		_customPanel = GameObject.FindGameObjectWithTag("custom_panel");
+		if (_customPanel == null)
+		{
+			Debug.LogError("_customPanel is null");
+		}
+
+		_dropdown = GameObject.FindGameObjectWithTag("win_conditions_dropdown").GetComponent<Dropdown>();
+		if (_dropdown == null)
+		{
+			Debug.LogError("_dropdown is null");
+		}
+		else
+		{
+			_dropdown.onValueChanged.AddListener(delegate
+			{
+				DropdownValueChanged(_dropdown);
+			});
+		}
+
+		_customPanel.SetActive(false);
+	}
+
     public void LoadMainGame()
     {
 		SaveData();
@@ -17,6 +49,16 @@ public class MainMenu : MonoBehaviour
 		SaveData();
         SceneManager.LoadSceneAsync("Race_test");
     }
+
+	public void DisplayCustomPanel()
+	{
+		_customPanel.SetActive(true);
+	}
+
+	public void OnBackButton()
+	{
+		_customPanel.SetActive(false);
+	}
 	
 	private void SaveData()
 	{
@@ -26,5 +68,15 @@ public class MainMenu : MonoBehaviour
 		jerkData.jerkInterval = (int)GameObject.Find("JerkIntervalSlider").GetComponent<Slider>().value;
 		
 		DataSaver.saveData(jerkData, "Jerks");
+
+		GameEndPreference gameEndData = new GameEndPreference();
+		gameEndData.gameEndValue = _gameEndValue;
+
+		DataSaver.saveData(gameEndData, "GameEnd");
+	}
+
+	private void DropdownValueChanged(Dropdown dropdown)
+	{
+		_gameEndValue = dropdown.value;
 	}
 }
