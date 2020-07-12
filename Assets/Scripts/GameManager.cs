@@ -12,8 +12,10 @@ public class GameManager : MonoBehaviour
     private List<KeyValuePair<string, int>> _ballNamesAndPoints;
 
     private bool _isGameOver = false;
+    private int _winningIndex = -1;
 
-	void Start()
+
+    void Start()
 	{
 		SetupMarbles();
 		SetupJerks();
@@ -23,17 +25,29 @@ public class GameManager : MonoBehaviour
     {
         _isGameOver = true;
 
+        int index = 0;
         _ballNamesAndPoints = new List<KeyValuePair<string, int>>();
         foreach (var marble in Marbles)
         {
             var ballComponent = marble.GetComponent<Ball>();
             _ballNamesAndPoints.Add(new KeyValuePair<string, int>(ballComponent.Name, ballComponent.Points));
+            
+            if (marble.activeSelf)
+            {
+                _winningIndex = index;
+            }
+            index++;
         }
     }
 
     public List<KeyValuePair<string, int>> GetBallNamesAndPoints()
     {
         return _ballNamesAndPoints;
+    }
+
+    public int GetWinningBallIndex()
+    {
+        return _winningIndex;
     }
 
     // Update is called once per frame

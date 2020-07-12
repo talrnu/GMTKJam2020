@@ -50,24 +50,23 @@ public class GameOverScreen : MonoBehaviour
                 _gameOverPanel.SetActive(true);
 
                 int index = 0;
+                int winningIndex = _gameManager.GetWinningBallIndex();
                 _ballNamesAndPoints = _gameManager.GetBallNamesAndPoints();
                 foreach (var gamePointTexts in _gamePointsTexts)
                 {
-                    //gamePointTexts.gameObject.SetActive(true);
-                    gamePointTexts.text = _ballNamesAndPoints[index].Key + ": " + _ballNamesAndPoints[index].Value;
+                    if (winningIndex == index)
+                    {
+                        gamePointTexts.text = "<color=green>" + _ballNamesAndPoints[index].Key + ": " + _ballNamesAndPoints[index].Value + "</color>";
+                    }
+                    else
+                    {
+                        gamePointTexts.text = _ballNamesAndPoints[index].Key + ": " + _ballNamesAndPoints[index].Value;
+                    }
                     ++index;
                 }
 
-                //foreach (var button in _buttons)
-                //{
-                //    button.gameObject.SetActive(true);
-                //}
-
                 _allObjectsActive = true;
             }
-
-            //_autoRestartText.text = "Restarting in: " + (int)_countdownTime;
-            //_gamePointsText.text = "Total Points: " + _meters.Points;
         }
     }
 
