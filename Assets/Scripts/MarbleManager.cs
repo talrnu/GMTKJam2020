@@ -24,8 +24,8 @@ public class MarbleManager : MonoBehaviour
 		// Check to see if any marbles were destroyed
 		CleanUpList();
 
-		// If the marble count has hit zero and the timer hasn't been set yet: Start the timer.
-		if (_activeMarbles.Count == 0 && !_gameManager.IsGameOver())
+		// If the marble count has hit one and the timer hasn't been set yet: Start the timer.
+		if (_activeMarbles.Count == 1 && !_gameManager.IsGameOver())
 		{
 			Debug.Log("No more marbles remain! Starting game over timer...");
 			_gameManager.GameOver();
