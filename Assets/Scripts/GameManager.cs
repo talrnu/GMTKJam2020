@@ -6,25 +6,16 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField]
-    private bool _isGameOver = false;
 
     [HideInInspector]
     public List<GameObject> Marbles;
     private List<KeyValuePair<string, int>> _ballNamesAndPoints;
 
-    void Start()
-    {
-        Debug.Log("GameManager.Start() called");
-        Marbles = new List<GameObject>();
-
-	    GameObject[] list = GameObject.FindGameObjectsWithTag("Ball");
-
-	    foreach (var marble in list)
-	    {
-	        Marbles.Add(marble);
-	    }
-    }
+	void Start()
+	{
+		SetupMarbles();
+		SetupJerks();
+	}
 
     public void GameOver()
     {
@@ -57,22 +48,52 @@ public class GameManager : MonoBehaviour
         }
     }
 
+	private void InitiateGame()
+	{
+		foreach (var marble in Marbles)
+		{
+			marble.SetActive(true);
+		}
+	}
+
     private void ReloadScene()
     {
-        SceneManager.LoadSceneAsync(1); // this hard coded value needs to change
-	    foreach (var marble in Marbles)
-	    {
-	        marble.SetActive(true);
-	    }
+        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
+		InitiateGame();
     }
 
     private void ToMainMenu()
     {
         SceneManager.LoadSceneAsync(0);
+		InitiateGame();
     }
 
     public bool IsGameOver()
     {
         return _isGameOver;
     }
+	
+	private void SetupMarbles()
+	{
+		Marbles = new List<GameObject>();
+
+		GameObject[] list = GameObject.FindGameObjectsWithTag("Ball");
+
+		foreach (var marble in list)
+		{
+			Marbles.Add(marble);
+		}
+	}
+
+	private void SetupJerks()
+	{		
+		var jerkSim = this.GetComponent<JerkSimulator>();
+		if (jerkSim != null)
+		{
+			JerkPreferences jerkData = DataSaver.loadData<JerkPreferences>("Jerks");
+			jerkSim.JerkCount = jerkData.jerkCount;
+			jerkSim.JerkWeight = jerkData.jerkWeight;
+			jerkSim.JerkInterval = jerkData.jerkInterval;
+		}
+	}
 }
