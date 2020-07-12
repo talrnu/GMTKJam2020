@@ -14,6 +14,21 @@ public class GameManager : MonoBehaviour
 
     public float WaitTimeForRestart => _waitTimeForRestart;
 
+    [HideInInspector]
+    public List<GameObject> Marbles;
+
+    void Start()
+    {
+        Marbles = new List<GameObject>();
+
+	GameObject[] list = GameObject.FindGameObjectsWithTag("Ball");
+
+	foreach (var marble in list)
+	{
+	    Marbles.Add(marble);
+	}
+    }
+
     public void GameOver()
     {
         _isGameOver = true;
@@ -38,6 +53,10 @@ public class GameManager : MonoBehaviour
     private void ReloadScene()
     {
         SceneManager.LoadSceneAsync(1); // this hard coded value needs to change
+	foreach (var marble in Marbles)
+	{
+	    marble.SetActive(true);
+	}
     }
 
     private void ToMainMenu()
