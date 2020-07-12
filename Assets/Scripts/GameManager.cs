@@ -12,6 +12,20 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private bool _isGameOver = false;
 
+    [HideInInspector]
+	public List<GameObject> Marbles;
+
+	void Start()
+	{
+		Marbles = new List<GameObject>();
+
+		GameObject[] list = GameObject.FindGameObjectsWithTag("Ball");
+
+		foreach (var marble in list)
+		{
+			Marbles.Add(marble);
+		}
+	}
 
     public void GameOver()
     {
@@ -37,6 +51,10 @@ public class GameManager : MonoBehaviour
     private void ReloadScene()
     {
         SceneManager.LoadSceneAsync(1); // this hard coded value needs to change
+		foreach (var marble in Marbles)
+		{
+			marble.SetActive(true);
+		}
     }
 
     private void ToMainMenu()

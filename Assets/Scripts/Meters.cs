@@ -1,13 +1,17 @@
 ﻿using System;
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 
 public class Meters : MonoBehaviour
 {
+	[SerializeField] private GameManager _gameManager;
 	private Text _meterPoints;
 	private Text _meterVotes;
-	private string _statonaryColor = "orange";
+	private string _stationaryColor = "orange";
 	private string _warningColor = "red";
+	private string _deadColor = "black";
 	private Color _normalColor = Color.blue;
     private InputVoteCollector _inputVoteCollector;
 	
@@ -30,18 +34,20 @@ public class Meters : MonoBehaviour
 	
 	private void UpdateBallMeters()
 	{
-		var balls = GameObject.FindGameObjectsWithTag("Ball");
+//		var balls = GameObject.FindGameObjectsWithTag("Ball");
 		
 		_meterPoints.text = "";
 		int i = 0;
-		foreach (var ball in balls)
+		foreach (var marble in _gameManager.Marbles)
 		{
-			var ballComponent = ball.GetComponent<Ball>();
-			var statonary = ballComponent.TimeToSelfDestruct <= ballComponent.SelfDestructSeconds - 1;
+			var ballComponent = marble.GetComponent<Ball>();
+
+			var stationary = ballComponent.TimeToSelfDestruct <= ballComponent.SelfDestructSeconds - 1;
 			var warning = ballComponent.TimeToSelfDestruct <= 1;
-			_meterPoints.text += warning ? "<color=" + _warningColor + ">" : statonary ? "<color=" + _statonaryColor + ">" : "";
+			var dead = !marble.activeSelf;
+			_meterPoints.text += dead ? "<color=" + _deadColor + ">" : warning ? "<color=" + _warningColor + ">" : stationary ? "<color=" + _stationaryColor + ">" : "";
 			_meterPoints.text += ballComponent.Name + " " + ballComponent.Points;
-			_meterPoints.text += (warning || statonary) ? "</color>" : "";
+			_meterPoints.text += (dead || warning || stationary) ? "</color>" : "";
 			_meterPoints.text += "\n";
 			i++;
 		}
@@ -52,7 +58,6 @@ public class Meters : MonoBehaviour
 		_meterVotes.text = "";
 		foreach(var direction in _inputVoteCollector.Choices.Keys)
         {
-//			_meterVotes.text += _inputVoteCollector.Choices[direction].display + " " + _inputVoteCollector.Choices[direction].tally;
 			_meterVotes.text += direction + " " + _inputVoteCollector.Choices[direction].tally + "\n";
 		}
 	}

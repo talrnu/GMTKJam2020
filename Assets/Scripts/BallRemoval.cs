@@ -10,8 +10,7 @@ public class BallRemoval : MonoBehaviour
 		{
 			// TODO for Lisa (FX): Before the destroy line we can probably exectue effects here.
 
-			Object.Destroy(other.gameObject);
-			Debug.Log("A marble has been destroyed!");
+			other.GetComponent<Ball>().DestroyThisBall = true;
 		}
 	}
 }
