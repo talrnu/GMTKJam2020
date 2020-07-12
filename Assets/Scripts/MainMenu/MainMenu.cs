@@ -23,7 +23,7 @@ public class MainMenu : MonoBehaviour
 		JerkPreferences jerkData = new JerkPreferences();
 		jerkData.jerkCount = (int)GameObject.Find("JerkCountSlider").GetComponent<Slider>().value;
 		jerkData.jerkWeight = GameObject.Find("JerkWeightSlider").GetComponent<Slider>().value;
-		jerkData.jerkInterval = (int)GameObject.Find("JerkIntervalSlider").GetComponent<Slider>().value;
+		jerkData.jerkInterval = GameObject.Find("JerkIntervalSlider").GetComponent<Slider>().value;
 		
 		DataSaver.saveData(jerkData, "Jerks");
 	}
