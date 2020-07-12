@@ -29,9 +29,9 @@ public class LocalPlayer : MonoBehaviour
         {
             ChoosableDirection choice = default;
             var smallestAngle = 360f;
-            foreach(var direction in InputVoteCollector.ChoiceUnitVectors.Keys)
+            foreach(var direction in InputVoteCollector.Choices.Keys)
             {
-                var directionVector = InputVoteCollector.ChoiceUnitVectors[direction];
+                var directionVector = InputVoteCollector.Choices[direction].vector;
                 var angleBetween = Vector2.Angle(directionVector, input);
                 if (angleBetween < smallestAngle)
                 {

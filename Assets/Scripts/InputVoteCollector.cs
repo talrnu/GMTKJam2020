@@ -9,31 +9,37 @@ public class InputVoteCollector : MonoBehaviour
     public List<InputVote> Votes;
     public MazeController MazeController;
 
-    [HideInInspector]
-    public Dictionary<ChoosableDirection, Vector2> ChoiceUnitVectors = new Dictionary<ChoosableDirection, Vector2>
-    {
-        { ChoosableDirection.North, Vector2.up },
-        //{ ChoosableDirection.Northeast, Vector2.ClampMagnitude(Vector2.up + Vector2.right, 1f) },
-        { ChoosableDirection.East, Vector2.right },
-        //{ ChoosableDirection.Southeast, Vector2.ClampMagnitude(Vector2.down + Vector2.right, 1f) },
-        { ChoosableDirection.South, Vector2.down },
-        //{ ChoosableDirection.Southwest, Vector2.ClampMagnitude(Vector2.down + Vector2.left, 1f) },
-        { ChoosableDirection.West, Vector2.left },
-        //{ ChoosableDirection.Northwest, Vector2.ClampMagnitude(Vector2.up + Vector2.left, 1f) }
-    };
+	[HideInInspector]
+    public class Direction
+	{
+		public ChoosableDirection direction;
+		public Vector2 vector;
+		public float tally;
+		public string display;
+		
+		public Direction(ChoosableDirection _direction, Vector2 _vector, float _tally, string _display)
+		{
+			direction = _direction;
+			vector = _vector;
+			tally = _tally;
+			display = _display;
+		}
+	}
 
-    private bool TalliesHaveChanged = false;
-    private Dictionary<ChoosableDirection, float> ChoiceTallies = new Dictionary<ChoosableDirection, float>
+    [HideInInspector]
+    public Dictionary<ChoosableDirection, Direction> Choices = new Dictionary<ChoosableDirection, Direction>
     {
-        { ChoosableDirection.North, 0f },
-        //{ ChoosableDirection.Northeast, 0f },
-        { ChoosableDirection.East, 0f },
-        //{ ChoosableDirection.Southeast, 0f },
-        { ChoosableDirection.South, 0f },
-        //{ ChoosableDirection.Southwest, 0f },
-        { ChoosableDirection.West, 0f },
-        //{ ChoosableDirection.Northwest, 0f }
+        { ChoosableDirection.North, new Direction(ChoosableDirection.North, Vector2.up, 0f, "⭡") },
+        //{ ChoosableDirection.Northeast, new Direction(ChoosableDirection.Northeast, Vector2.ClampMagnitude(Vector2.up + Vector2.right, 1f), 0f, "⭧" ) },
+        { ChoosableDirection.East, new Direction(ChoosableDirection.East, Vector2.right, 0f, "⭢" ) },
+        //{ ChoosableDirection.Southeast, new Direction(ChoosableDirection.Southeast, Vector2.ClampMagnitude(Vector2.down + Vector2.right, 1f), 0f, "⭨" ) },
+        { ChoosableDirection.South, new Direction(ChoosableDirection.South, Vector2.down, 0f, "⭣" ) },
+        //{ ChoosableDirection.Southwest, new Direction(ChoosableDirection.Southwest, Vector2.ClampMagnitude(Vector2.down + Vector2.left, 1f), 0f, "⭩" ) },
+        { ChoosableDirection.West, new Direction(ChoosableDirection.West, Vector2.left, 0f, "⭠" ) },
+        //{ ChoosableDirection.Northwest, new Direction(ChoosableDirection.Northwest, Vector2.ClampMagnitude(Vector2.up + Vector2.left, 1f), 0f, "⭦" ) }
     };
+	
+    private bool TalliesHaveChanged = false;
 
     private void Start()
     {
@@ -74,11 +80,11 @@ public class InputVoteCollector : MonoBehaviour
             var newChoice = (vote.DirectionChoice.HasValue) ? Enum.GetName(typeof(ChoosableDirection), vote.DirectionChoice) : "Nothing";
             Debug.Log($"Updating vote {existingVote.VoterID} with weight {existingVote.Weight} from {oldChoice} to {newChoice}");
 
-            if (existingVote.DirectionChoice.HasValue) ChoiceTallies[existingVote.DirectionChoice.Value] -= existingVote.Weight;
+            if (existingVote.DirectionChoice.HasValue) Choices[existingVote.DirectionChoice.Value].tally -= existingVote.Weight;
             existingVote.DirectionChoice = vote.DirectionChoice;
         }
 
-        if (existingVote.DirectionChoice.HasValue) ChoiceTallies[existingVote.DirectionChoice.Value] += existingVote.Weight;
+        if (existingVote.DirectionChoice.HasValue) Choices[existingVote.DirectionChoice.Value].tally += existingVote.Weight;
 
         //Debug.Log("Tallies have changed");
         TalliesHaveChanged = true;
@@ -92,7 +98,7 @@ public class InputVoteCollector : MonoBehaviour
         {
             if (vote.DirectionChoice.HasValue)
             {
-                ChoiceTallies[vote.DirectionChoice.Value] -= vote.Weight;
+                Choices[vote.DirectionChoice.Value].tally -= vote.Weight;
             }
             Votes.Remove(vote);
         }
@@ -122,9 +128,9 @@ public class InputVoteCollector : MonoBehaviour
     private Vector2 CalculateVotedInput_VectorSum()
     {
         var sum = Vector2.zero;
-        foreach (var direction in ChoiceTallies.Keys)
+        foreach (var direction in Choices.Keys)
         {
-            sum += ChoiceUnitVectors[direction] * ChoiceTallies[direction];
+            sum += Choices[direction].vector * Choices[direction].tally;
         }
         sum.Normalize();
         Debug.Log($"New voted input is {sum}");
@@ -139,15 +145,15 @@ public class InputVoteCollector : MonoBehaviour
         ChoosableDirection? chosenDirection = null;
         var highestTally = 0f;
         bool tie = true;
-        foreach (var direction in ChoiceTallies.Keys)
+        foreach (var direction in Choices.Keys)
         {
-            if (ChoiceTallies[direction] > highestTally)
+            if (Choices[direction].tally > highestTally)
             {
                 chosenDirection = direction;
-                highestTally = ChoiceTallies[direction];
+                highestTally = Choices[direction].tally;
                 tie = false;
             }
-            else if (ChoiceTallies[direction] == highestTally)
+            else if (Choices[direction].tally == highestTally)
             {
                 tie = true;
             }
@@ -161,7 +167,7 @@ public class InputVoteCollector : MonoBehaviour
         else
         {
             Debug.Log($"Voting chose a direction: {Enum.GetName(typeof(ChoosableDirection), chosenDirection.Value)}");
-            return ChoiceUnitVectors[chosenDirection.Value];
+            return Choices[chosenDirection.Value].vector;
         }
     }
 

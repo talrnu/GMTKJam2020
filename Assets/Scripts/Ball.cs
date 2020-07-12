@@ -3,11 +3,16 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
-	public int Points = 0;
-	public int TimeToSelfDestruct;
 	public float MovementEpsilon = 0.05f;
-	public bool DestroyThisBall = false;
 	public int SelfDestructSeconds = 5;
+	
+	[HideInInspector]
+	public bool DestroyThisBall = false;
+	[HideInInspector]
+	public int Points = 0;
+	[HideInInspector]
+	public int TimeToSelfDestruct;
+
 	private Vector3 _currentPosition;
 	private Vector3 _previousPosition;
 	private bool _timerStarted = false;
