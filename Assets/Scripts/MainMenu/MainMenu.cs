@@ -5,8 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    public void LoadGame()
+    public void LoadMainGame()
     {
-        SceneManager.LoadSceneAsync(1);
+        SceneManager.LoadSceneAsync("main");
+    }
+
+    public void LoadRaceGame()
+    {
+        SceneManager.LoadSceneAsync("Race_test");
     }
 }

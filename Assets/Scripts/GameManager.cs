@@ -57,7 +57,7 @@ public class GameManager : MonoBehaviour
 
     private void ReloadScene()
     {
-        SceneManager.LoadSceneAsync(1); // this hard coded value needs to change
+        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
 		InitiateGame();
     }
 
