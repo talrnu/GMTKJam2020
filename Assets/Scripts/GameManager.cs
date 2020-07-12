@@ -16,16 +16,10 @@ public class GameManager : MonoBehaviour
 
 	void Start()
 	{
-		Marbles = new List<GameObject>();
-
-		GameObject[] list = GameObject.FindGameObjectsWithTag("Ball");
-
-		foreach (var marble in list)
-		{
-			Marbles.Add(marble);
-		}
+		SetupMarbles();
+		SetupJerks();
 	}
-	
+
     public void GameOver()
     {
         _isGameOver = true;
@@ -81,4 +75,28 @@ public class GameManager : MonoBehaviour
     {
         return _isGameOver;
     }
+	
+	private void SetupMarbles()
+	{
+		Marbles = new List<GameObject>();
+
+		GameObject[] list = GameObject.FindGameObjectsWithTag("Ball");
+
+		foreach (var marble in list)
+		{
+			Marbles.Add(marble);
+		}
+	}
+
+	private void SetupJerks()
+	{		
+		var jerkSim = this.GetComponent<JerkSimulator>();
+		if (jerkSim != null)
+		{
+			JerkPreferences jerkData = DataSaver.loadData<JerkPreferences>("Jerks");
+			jerkSim.JerkCount = jerkData.jerkCount;
+			jerkSim.JerkWeight = jerkData.jerkWeight;
+			jerkSim.JerkInterval = jerkData.jerkInterval;
+		}
+	}
 }
