@@ -40,8 +40,9 @@ public class Meters : MonoBehaviour
 			var statonary = ballComponent.TimeToSelfDestruct <= ballComponent.SelfDestructSeconds - 1;
 			var warning = ballComponent.TimeToSelfDestruct <= 1;
 			_meterPoints.text += warning ? "<color=" + _warningColor + ">" : statonary ? "<color=" + _statonaryColor + ">" : "";
-			_meterPoints.text += "Points[" + i + "]:" + ballComponent.Points;
+			_meterPoints.text += ballComponent.Name + " " + ballComponent.Points;
 			_meterPoints.text += (warning || statonary) ? "</color>" : "";
+			_meterPoints.text += "\n";
 			i++;
 		}
 	}
@@ -52,7 +53,7 @@ public class Meters : MonoBehaviour
 		foreach(var direction in _inputVoteCollector.Choices.Keys)
         {
 //			_meterVotes.text += _inputVoteCollector.Choices[direction].display + " " + _inputVoteCollector.Choices[direction].tally;
-			_meterVotes.text += direction + " " + _inputVoteCollector.Choices[direction].tally;
+			_meterVotes.text += direction + " " + _inputVoteCollector.Choices[direction].tally + "\n";
 		}
 	}
 }

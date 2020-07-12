@@ -5,6 +5,7 @@ public class Ball : MonoBehaviour
 {
 	public float MovementEpsilon = 0.05f;
 	public int SelfDestructSeconds = 5;
+	public string Name = "Default";
 	
 	[HideInInspector]
 	public bool DestroyThisBall = false;
