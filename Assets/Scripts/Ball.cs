@@ -58,4 +58,38 @@ public class Ball : MonoBehaviour
 			Invoke ( "_tick", 1f );
 		}
 	}
+
+	private void OnTriggerEnter(Collider other)
+	{
+		if (other.CompareTag("Hole"))
+		{
+			int HoleSound = UnityEngine.Random.Range(1, 3);
+			if (HoleSound == 1)
+				SoundManager.Instance.Playsound("FX/Marble Falls In Glass Hole 1");
+			if (HoleSound == 2)
+				SoundManager.Instance.Playsound("FX/Marble Falls In Glass Hole 2");
+			if (HoleSound == 3)
+				SoundManager.Instance.Playsound("FX/Marble Falls In Glass Hole 3");
+		}
+	}
+
+	private void OnCollisionEnter(Collision collision)
+	{
+		if (collision.gameObject.CompareTag("Ball"))
+		{
+			SoundManager.Instance.Playsound("FX/Marble Hits Metal 1");
+		}
+		else if (collision.gameObject.CompareTag("Wall"))
+		{
+			int WallSound = UnityEngine.Random.Range(1, 4);
+			if (WallSound == 1)
+				SoundManager.Instance.Playsound("FX/Marble Hits Glass 1");
+			if (WallSound == 2)
+				SoundManager.Instance.Playsound("FX/Marble Hits Glass 2");
+			if (WallSound == 3)
+				SoundManager.Instance.Playsound("FX/Marble Hits Glass 3");
+			if (WallSound == 4)
+				SoundManager.Instance.Playsound("FX/Marble Hits Glass 4");
+		}
+	}
 }
