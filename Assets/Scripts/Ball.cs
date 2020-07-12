@@ -18,6 +18,8 @@ public class Ball : MonoBehaviour
 	private Vector3 _previousPosition;
 	private bool _timerStarted = false;
 
+	[SerializeField] private AudioSource _movingSound;
+
 	void Start()
 	{
 		_currentPosition = this.GetComponent<Transform>().position;
@@ -29,6 +31,8 @@ public class Ball : MonoBehaviour
 			_timerStarted = true;
 			Invoke ( "_tick", 1f );
 		}
+
+		_movingSound.Play();
 	}
 
 	private void Update()
@@ -37,14 +41,18 @@ public class Ball : MonoBehaviour
 		float dist = Vector3.Distance(_previousPosition, _currentPosition);
 		if (Vector3.Distance(_previousPosition, _currentPosition) > MovementEpsilon)
 		{
+			if (!_movingSound.isPlaying)
+				_movingSound.Play();
+
 			TimeToSelfDestruct = SelfDestructSeconds;
 		}
-		
+
 		_previousPosition = _currentPosition;
 		
 		if (TimeToSelfDestruct <= 0)
 		{
 			DestroyThisBall = true;
+			_movingSound.Stop();
 		}
 	}
 	
