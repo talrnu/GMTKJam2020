@@ -7,7 +7,10 @@ using UnityEngine.UI;
 public class Meters : MonoBehaviour
 {
 	[SerializeField] private GameManager _gameManager;
-	private Text _meterPoints;
+	[SerializeField] private Text _firePoints;
+	[SerializeField] private Text _waterPoints;
+	[SerializeField] private Text _earthPoints;
+	[SerializeField] private Text _airPoints;
 	private Text _meterVotes;
 	private string _stationaryColor = "orange";
 	private string _warningColor = "red";
@@ -18,10 +21,23 @@ public class Meters : MonoBehaviour
 	void Start()
 	{
 		Debug.Log("Meters.Start() called");
-		_meterPoints = GameObject.Find("MeterPoints").GetComponent<Text>();
-		_meterPoints.color = _normalColor;
-		_meterPoints.text = "Roll out";
-		
+
+		// Fire
+		_firePoints.color = _normalColor;
+		_firePoints.text = "Roll out";
+
+		// Water
+		_waterPoints.color = _normalColor;
+		_waterPoints.text = "Roll out";
+
+		// Earth
+		_earthPoints.color = _normalColor;
+		_earthPoints.text = "Roll out";
+
+		// Air
+		_airPoints.color = _normalColor;
+		_airPoints.text = "Roll out";
+
 		_meterVotes = GameObject.Find("MeterVotes").GetComponent<Text>();
 		_meterVotes.color = _normalColor;
 		_meterVotes.text = "";
@@ -37,7 +53,11 @@ public class Meters : MonoBehaviour
 	
 	private void UpdateBallMeters()
 	{
-		_meterPoints.text = "";
+		_firePoints.text = "";
+		_waterPoints.text = "";
+		_earthPoints.text = "";
+		_airPoints.text = "";
+
 		int i = 0;
 		foreach (var marble in _gameManager.Marbles)
 		{
@@ -46,10 +66,35 @@ public class Meters : MonoBehaviour
 			var stationary = ballComponent.TimeToSelfDestruct <= ballComponent.SelfDestructSeconds - 1;
 			var warning = ballComponent.TimeToSelfDestruct <= 1;
 			var dead = !marble.activeSelf;
-			_meterPoints.text += dead ? "<color=" + _deadColor + ">" : warning ? "<color=" + _warningColor + ">" : stationary ? "<color=" + _stationaryColor + ">" : "";
-			_meterPoints.text += ballComponent.Name + " " + ballComponent.Points;
-			_meterPoints.text += (dead || warning || stationary) ? "</color>" : "";
-			_meterPoints.text += "\n";
+			if (marble.name == "Player_earth")
+			{
+				_earthPoints.text += dead ? "<color=" + _deadColor + ">" : warning ? "<color=" + _warningColor + ">" : stationary ? "<color=" + _stationaryColor + ">" : "";
+				_earthPoints.text += ballComponent.Name + " " + ballComponent.Points;
+				_earthPoints.text += (dead || warning || stationary) ? "</color>" : "";
+				_earthPoints.text += "\n";
+			}
+			else if (marble.name == "Player_fire")
+			{
+				_firePoints.text += dead ? "<color=" + _deadColor + ">" : warning ? "<color=" + _warningColor + ">" : stationary ? "<color=" + _stationaryColor + ">" : "";
+				_firePoints.text += ballComponent.Name + " " + ballComponent.Points;
+				_firePoints.text += (dead || warning || stationary) ? "</color>" : "";
+				_firePoints.text += "\n";
+			}
+			else if (marble.name == "Player_water")
+			{
+				_waterPoints.text += dead ? "<color=" + _deadColor + ">" : warning ? "<color=" + _warningColor + ">" : stationary ? "<color=" + _stationaryColor + ">" : "";
+				_waterPoints.text += ballComponent.Name + " " + ballComponent.Points;
+				_waterPoints.text += (dead || warning || stationary) ? "</color>" : "";
+				_waterPoints.text += "\n";
+			}
+			else if (marble.name == "Player_wind")
+			{
+				_airPoints.text += dead ? "<color=" + _deadColor + ">" : warning ? "<color=" + _warningColor + ">" : stationary ? "<color=" + _stationaryColor + ">" : "";
+				_airPoints.text += ballComponent.Name + " " + ballComponent.Points;
+				_airPoints.text += (dead || warning || stationary) ? "</color>" : "";
+				_airPoints.text += "\n";
+			}
+
 			i++;
 		}
 	}
