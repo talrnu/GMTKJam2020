@@ -121,7 +121,7 @@ public class InputVoteCollector : MonoBehaviour
             }
 
             //Recounting votes at 10Hz:
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.01f);
         }
     }
 

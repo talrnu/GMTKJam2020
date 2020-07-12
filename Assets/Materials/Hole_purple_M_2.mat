@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Wall_corner
+  m_Name: Hole_purple_M_2
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: _ALPHAPREMULTIPLY_ON _EMISSION
   m_LightmapFlags: 2
@@ -37,7 +37,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
-        m_Texture: {fileID: 2800000, guid: ef380c701cafa52499a0dabde5a401b0, type: 3}
+        m_Texture: {fileID: 2800000, guid: 69ce7c66cea84b14cb0f5c699971f450, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -74,5 +74,5 @@ Material:
     - _UVSec: 0
     - _ZWrite: 0
     m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 0.49803922}
-    - _EmissionColor: {r: 1.0592737, g: 0.57288617, b: 0, a: 1}
+    - _Color: {r: 0.22745098, g: 0, b: 0.3137255, a: 0.827451}
+    - _EmissionColor: {r: 1, g: 0.79129815, b: 0.05951124, a: 1}
