@@ -222,11 +222,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90203a071deb2224294b89aa1a77aeb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MovementEpsilon: 0.05
+  SelfDestructSeconds: 5
+  Name: Earth
+  DestroyThisBall: 0
   Points: 0
   TimeToSelfDestruct: 0
-  MovementEpsilon: 0.05
-  DestroyThisBall: 0
-  SelfDestructSeconds: 5
 --- !u!1 &4820186511199456375
 GameObject:
   m_ObjectHideFlags: 0
@@ -511,7 +512,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0.5
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -3781,9 +3782,9 @@ ParticleSystem:
         m_NumAlphaKeys: 2
     range: {x: 0, y: 1}
   CollisionModule:
-    enabled: 0
+    enabled: 1
     serializedVersion: 3
-    type: 0
+    type: 1
     collisionMode: 0
     colliderForce: 0
     multiplyColliderForceByParticleSize: 0
