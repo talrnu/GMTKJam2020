@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
     public List<GameObject> Marbles;
     private List<KeyValuePair<string, int>> _ballNamesAndPoints;
 
+    private bool _isGameOver = false;
+
 	void Start()
 	{
 		SetupMarbles();
