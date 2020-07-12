@@ -2,21 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameOverScreen : MonoBehaviour
 {
     [SerializeField]
-    private Text _gamePointsText;
-
-    [SerializeField]
-    private Text _autoRestartText;
+    private Text[] _gamePointsTexts;
 
     [SerializeField]
     private GameObject _gameOverPanel;
     private GameManager _gameManager;
     private Meters _meters;
+    private Button[] _buttons;
 
-    private float _countdownTime;
+    private bool _allObjectsActive = false;
+    private List<KeyValuePair<string, int>> _ballNamesAndPoints;
 
     // Start is called before the first frame update
     void Start()
@@ -26,27 +26,14 @@ public class GameOverScreen : MonoBehaviour
         {
             Debug.LogError("Meters component in GameOverScreen is null");
         }
-        else
-        {
-            _gamePointsText.text = "Total Points: " + _meters.Points;
-        }
 
         _gameManager = GameObject.Find("game_manager").GetComponent<GameManager>();
         if (_gameManager == null)
         {
             Debug.LogError("GameManager component in GameOverScreen is null");
         }
-        else
-        {
-            _countdownTime = _gameManager.WaitTimeForRestart;
-            _autoRestartText.text = "Restarting in: " + (int)_countdownTime;
-        }
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        CountdownToRestart();
+        _buttons = GetComponents<Button>();
     }
 
     void OnGUI()
@@ -58,20 +45,39 @@ public class GameOverScreen : MonoBehaviour
     {
         if (_gameManager.IsGameOver())
         {
-            _gameOverPanel.SetActive(true);
-            _gamePointsText.gameObject.SetActive(true);
-            _autoRestartText.gameObject.SetActive(true);
+            if (!_allObjectsActive)
+            {
+                _gameOverPanel.SetActive(true);
 
-            _autoRestartText.text = "Restarting in: " + (int)_countdownTime;
-            _gamePointsText.text = "Total Points: " + _meters.Points;
+                int index = 0;
+                _ballNamesAndPoints = _gameManager.GetBallNamesAndPoints();
+                foreach (var gamePointTexts in _gamePointsTexts)
+                {
+                    //gamePointTexts.gameObject.SetActive(true);
+                    gamePointTexts.text = _ballNamesAndPoints[index].Key + ": " + _ballNamesAndPoints[index].Value;
+                    ++index;
+                }
+
+                //foreach (var button in _buttons)
+                //{
+                //    button.gameObject.SetActive(true);
+                //}
+
+                _allObjectsActive = true;
+            }
+
+            //_autoRestartText.text = "Restarting in: " + (int)_countdownTime;
+            //_gamePointsText.text = "Total Points: " + _meters.Points;
         }
     }
 
-    private void CountdownToRestart()
+    public void OnReplayGame()
     {
-        if (_gameManager.IsGameOver())
-        {
-            _countdownTime -= Time.deltaTime;
-        }
+        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
+    }
+
+    public void OnMainMenu()
+    {
+        SceneManager.LoadSceneAsync(0);
     }
 }

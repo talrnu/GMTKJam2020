@@ -17,6 +17,7 @@ public class Meters : MonoBehaviour
 	
 	void Start()
 	{
+		Debug.Log("Meters.Start() called");
 		_meterPoints = GameObject.Find("MeterPoints").GetComponent<Text>();
 		_meterPoints.color = _normalColor;
 		_meterPoints.text = "Roll out";

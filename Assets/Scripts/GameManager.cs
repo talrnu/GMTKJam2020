@@ -7,33 +7,40 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     [SerializeField]
-    private float _waitTimeForRestart = 5.0f;
-
-    [SerializeField]
     private bool _isGameOver = false;
-
-    public float WaitTimeForRestart => _waitTimeForRestart;
 
     [HideInInspector]
     public List<GameObject> Marbles;
+    private List<KeyValuePair<string, int>> _ballNamesAndPoints;
 
     void Start()
     {
+        Debug.Log("GameManager.Start() called");
         Marbles = new List<GameObject>();
 
-	GameObject[] list = GameObject.FindGameObjectsWithTag("Ball");
+	    GameObject[] list = GameObject.FindGameObjectsWithTag("Ball");
 
-	foreach (var marble in list)
-	{
-	    Marbles.Add(marble);
-	}
+	    foreach (var marble in list)
+	    {
+	        Marbles.Add(marble);
+	    }
     }
 
     public void GameOver()
     {
         _isGameOver = true;
 
-        StartCoroutine(RestartGame());
+        _ballNamesAndPoints = new List<KeyValuePair<string, int>>();
+        foreach (var marble in Marbles)
+        {
+            var ballComponent = marble.GetComponent<Ball>();
+            _ballNamesAndPoints.Add(new KeyValuePair<string, int>(ballComponent.Name, ballComponent.Points));
+        }
+    }
+
+    public List<KeyValuePair<string, int>> GetBallNamesAndPoints()
+    {
+        return _ballNamesAndPoints;
     }
 
     // Update is called once per frame
@@ -53,25 +60,15 @@ public class GameManager : MonoBehaviour
     private void ReloadScene()
     {
         SceneManager.LoadSceneAsync(1); // this hard coded value needs to change
-	foreach (var marble in Marbles)
-	{
-	    marble.SetActive(true);
-	}
+	    foreach (var marble in Marbles)
+	    {
+	        marble.SetActive(true);
+	    }
     }
 
     private void ToMainMenu()
     {
         SceneManager.LoadSceneAsync(0);
-    }
-
-    private IEnumerator RestartGame()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(_waitTimeForRestart);
-
-            ReloadScene();
-        }
     }
 
     public bool IsGameOver()
