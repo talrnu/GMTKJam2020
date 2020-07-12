@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private bool _isGameOver = false;
 
+    public float WaitTimeForRestart => _waitTimeForRestart;
 
     public void GameOver()
     {
@@ -52,5 +53,10 @@ public class GameManager : MonoBehaviour
 
             ReloadScene();
         }
+    }
+
+    public bool IsGameOver()
+    {
+        return _isGameOver;
     }
 }
