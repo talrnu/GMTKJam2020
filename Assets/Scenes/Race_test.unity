@@ -838,7 +838,7 @@ PrefabInstance:
     - target: {fileID: 8235215762694655074, guid: 82492df3a5c139445932b58ef89d3684,
         type: 3}
       propertyPath: m_Name
-      value: Meters 1
+      value: Meters
       objectReference: {fileID: 0}
     - target: {fileID: 8235215762694655078, guid: 82492df3a5c139445932b58ef89d3684,
         type: 3}
