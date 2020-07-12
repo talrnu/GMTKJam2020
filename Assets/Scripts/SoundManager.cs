@@ -6,6 +6,7 @@ using UnityEngine;
 public class SoundManager : Singleton<SoundManager>
 {
     [SerializeField] private AudioSource _backgroundMusic;
+    [SerializeField] private string _musicToPlay;
 
     private AudioSource _audioSource;
 
@@ -14,7 +15,7 @@ public class SoundManager : Singleton<SoundManager>
         _audioSource = GetComponent<AudioSource>();
 
         // Play Music
-        PlayMusic("FX/Music");
+        PlayMusic(_musicToPlay);
     }
 
     public void Playsound(string soundPath)
