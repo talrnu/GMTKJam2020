@@ -20,9 +20,11 @@ public class Meters : MonoBehaviour
 		_meterPoints = GameObject.Find("MeterPoints").GetComponent<Text>();
 		_meterPoints.color = _normalColor;
 		_meterPoints.text = "Roll out";
+		
 		_meterVotes = GameObject.Find("MeterVotes").GetComponent<Text>();
 		_meterVotes.color = _normalColor;
 		_meterVotes.text = "";
+		
 		_inputVoteCollector = GameObject.Find("game_manager").GetComponent<InputVoteCollector>();
 	}
 	
@@ -34,8 +36,6 @@ public class Meters : MonoBehaviour
 	
 	private void UpdateBallMeters()
 	{
-//		var balls = GameObject.FindGameObjectsWithTag("Ball");
-		
 		_meterPoints.text = "";
 		int i = 0;
 		foreach (var marble in _gameManager.Marbles)

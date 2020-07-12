@@ -9,11 +9,10 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private float _waitTimeForRestart = 5.0f;
 
-    [SerializeField]
-    private bool _isGameOver = false;
-
     [HideInInspector]
 	public List<GameObject> Marbles;
+
+    private bool _isGameOver = false;
 
 	void Start()
 	{
@@ -26,7 +25,7 @@ public class GameManager : MonoBehaviour
 			Marbles.Add(marble);
 		}
 	}
-
+	
     public void GameOver()
     {
         _isGameOver = true;
@@ -48,18 +47,24 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void ReloadScene()
-    {
-        SceneManager.LoadSceneAsync(1); // this hard coded value needs to change
+	private void InitiateGame()
+	{
 		foreach (var marble in Marbles)
 		{
 			marble.SetActive(true);
 		}
+	}
+
+    private void ReloadScene()
+    {
+        SceneManager.LoadSceneAsync(1); // this hard coded value needs to change
+		InitiateGame();
     }
 
     private void ToMainMenu()
     {
         SceneManager.LoadSceneAsync(0);
+		InitiateGame();
     }
 
     private IEnumerator RestartGame()

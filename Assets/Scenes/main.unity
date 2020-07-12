@@ -496,7 +496,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _waitTimeForRestart: 5
-  _isGameOver: 0
+  Marbles: []
 --- !u!4 &1009517437
 Transform:
   m_ObjectHideFlags: 0
@@ -851,6 +851,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 547458b52ea80214b98575bd9a30a352, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _gameManager: {fileID: 1009517436}
 --- !u!1 &2049863776
 GameObject:
   m_ObjectHideFlags: 0
