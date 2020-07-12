@@ -21,8 +21,8 @@ public class MainMenu : MonoBehaviour
 		{
 			Debug.LogError("_customPanel is null");
 		}
-
-		_dropdown = GameObject.FindGameObjectWithTag("win_conditions_dropdown").GetComponent<Dropdown>();
+        _customPanel.SetActive(false);
+        _dropdown = GameObject.FindGameObjectWithTag("win_conditions_dropdown").GetComponent<Dropdown>();
 		if (_dropdown == null)
 		{
 			Debug.LogError("_dropdown is null");
@@ -35,18 +35,18 @@ public class MainMenu : MonoBehaviour
 			});
 		}
 
-		_customPanel.SetActive(false);
+		
 	}
 
     public void LoadMainGame()
     {
-		SaveData();
+		//SaveData();
         SceneManager.LoadSceneAsync("main");
     }
 
     public void LoadRaceGame()
     {
-		SaveData();
+		//SaveData();
         SceneManager.LoadSceneAsync("Race_test");
     }
 
@@ -57,7 +57,8 @@ public class MainMenu : MonoBehaviour
 
 	public void OnBackButton()
 	{
-		_customPanel.SetActive(false);
+        SaveData();
+        _customPanel.SetActive(false);
 	}
 
 	public void OnExitButton()
