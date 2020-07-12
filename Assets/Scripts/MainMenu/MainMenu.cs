@@ -59,6 +59,11 @@ public class MainMenu : MonoBehaviour
 	{
 		_customPanel.SetActive(false);
 	}
+
+	public void OnExitButton()
+	{
+		Application.Quit();
+	}
 	
 	private void SaveData()
 	{
