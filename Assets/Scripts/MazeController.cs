@@ -44,13 +44,13 @@ public class MazeController : MonoBehaviour
 
     private void ResetRotation()
     {
-        ////find the vector pointing from our position to the target
-        //Vector3 direction = (transform.position - transform.position).normalized;
+        //find the vector pointing from our position to the target
+        Vector3 direction = (transform.position - transform.position).normalized;
 
-        ////create the rotation we need to be in to look at the target
-        //Quaternion lookRotation = Quaternion.LookRotation(direction);
+        //create the rotation we need to be in to look at the target
+        Quaternion lookRotation = Quaternion.LookRotation(direction);
 
         //rotate us over time according to speed until we are in the required rotation
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.identity, Time.deltaTime * _resetSpeed);
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * _resetSpeed);
     }
 }

@@ -10,16 +10,10 @@ public class LocalPlayer : MonoBehaviour
         DirectionChoice = null,
         Weight = 1f
     };
-    private Vector2 previousInput = Vector2.zero;
 
     private void Update()
     {
         var input = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0f);
-        if (Mathf.Approximately(input.x, previousInput.x) && Mathf.Approximately(input.y, previousInput.y))
-        {
-            //No change in input, don't waste time processing it again
-            return;
-        }
         
         if (Mathf.Approximately(input.magnitude, 0f))
         {
@@ -43,6 +37,5 @@ public class LocalPlayer : MonoBehaviour
         }
 
         InputVoteCollector.ApplyVote(vote);
-        previousInput = input;
     }
 }

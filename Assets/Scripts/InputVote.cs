@@ -11,11 +11,11 @@ public class InputVote
 public enum ChoosableDirection
 {
     North,
-    //Northeast,
+    Northeast,
     East,
-    //Southeast,
+    Southeast,
     South,
-    //Southwest,
+    Southwest,
     West,
-    //Northwest
+    Northwest
 }
